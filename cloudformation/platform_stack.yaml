@@ -1,1 +1,56 @@
-# CloudFormation template for pipeline infra
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Customer360 Behavior Platform - Data Lake and Glue Job Infrastructure
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: customer360-data-lake
+    Description: S3 bucket for data lake
+
+Resources:
+  ## S3 Bucket for Data Lake
+  Customer360DataLake:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      VersioningConfiguration:
+        Status: Enabled
+
+  ## Glue IAM Role
+  GlueJobRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: customer360-glue-job-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: glue.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+        - arn:aws:iam::aws:policy/AmazonRedshiftFullAccess
+
+  ## Glue Database
+  Customer360GlueDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput:
+        Name: customer360_db
+
+Outputs:
+  S3BucketName:
+    Description: Name of the data lake S3 bucket
+    Value: !Ref Customer360DataLake
+
+  GlueRoleArn:
+    Description: IAM Role ARN for Glue jobs
+    Value: !GetAtt GlueJobRole.Arn
+
+  GlueDatabaseName:
+    Description: Name of the Glue database
+    Value: !Ref Customer360GlueDatabase

@@ -1,4 +1,68 @@
 [
-  {"customer_id": "C1001", "event": "page_view", "page": "home", "timestamp": "2025-06-01T12:00:00Z"},
-  {"customer_id": "C1002", "event": "add_to_cart", "page": "product", "timestamp": "2025-06-01T12:05:00Z"}
+  {
+    "customer_id": "C1001",
+    "event": "page_view",
+    "page": "home",
+    "timestamp": "2025-06-01T12:00:00Z",
+    "device": "mobile",
+    "browser": "Chrome",
+    "session_id": "sess_001",
+    "location": "New York, USA"
+  },
+  {
+    "customer_id": "C1001",
+    "event": "search",
+    "query": "wireless headphones",
+    "page": "search_results",
+    "timestamp": "2025-06-01T12:02:30Z",
+    "device": "mobile",
+    "browser": "Chrome",
+    "session_id": "sess_001",
+    "location": "New York, USA"
+  },
+  {
+    "customer_id": "C1002",
+    "event": "page_view",
+    "page": "product",
+    "product_id": "P2003",
+    "timestamp": "2025-06-01T12:04:50Z",
+    "device": "desktop",
+    "browser": "Firefox",
+    "session_id": "sess_002",
+    "location": "San Francisco, USA"
+  },
+  {
+    "customer_id": "C1002",
+    "event": "add_to_cart",
+    "page": "product",
+    "product_id": "P2003",
+    "timestamp": "2025-06-01T12:05:10Z",
+    "device": "desktop",
+    "browser": "Firefox",
+    "session_id": "sess_002",
+    "location": "San Francisco, USA"
+  },
+  {
+    "customer_id": "C1003",
+    "event": "checkout",
+    "page": "checkout",
+    "product_ids": ["P2001", "P2005"],
+    "total_amount": 149.98,
+    "payment_method": "credit_card",
+    "timestamp": "2025-06-01T12:15:00Z",
+    "device": "tablet",
+    "browser": "Safari",
+    "session_id": "sess_003",
+    "location": "Chicago, USA"
+  },
+  {
+    "customer_id": "C1001",
+    "event": "logout",
+    "page": "account",
+    "timestamp": "2025-06-01T12:20:30Z",
+    "device": "mobile",
+    "browser": "Chrome",
+    "session_id": "sess_001",
+    "location": "New York, USA"
+  }
 ]

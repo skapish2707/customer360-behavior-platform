@@ -1,1 +1,46 @@
-{ "Comment": "State machine for orchestrating ETL flow" }
+{
+  "Comment": "State machine to orchestrate Customer360 ETL pipeline",
+  "StartAt": "JoinSourcesCustomer360",
+  "States": {
+    "JoinSourcesCustomer360": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "join_sources_customer360"
+      },
+      "Next": "ChurnScoring"
+    },
+    "ChurnScoring": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "churn_scoring"
+      },
+      "Next": "DailySnapshot"
+    },
+    "DailySnapshot": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "daily_snapshot"
+      },
+      "Next": "PartitionCompact"
+    },
+    "PartitionCompact": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "partition_compact"
+      },
+      "Next": "ExportToRedshift"
+    },
+    "ExportToRedshift": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "export_to_redshift"
+      },
+      "End": true
+    }
+  }
+}
